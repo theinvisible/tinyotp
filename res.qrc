@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/img">
+        <file alias="tinyotp_icon.png">img/tinyotp_icon.png</file>
+        <file alias="about.png">img/about.png</file>
+        <file alias="quit.png">img/quit.png</file>
+        <file alias="settings.png">img/settings.png</file>
+    </qresource>
+</RCC>

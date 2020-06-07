@@ -1,0 +1,6 @@
+[submodule "libcotp"]
+	path = libcotp
+	url = https://github.com/paolostivanin/libcotp.git
+[submodule "libbaseencode"]
+	path = libbaseencode
+	url = https://github.com/paolostivanin/libbaseencode.git
