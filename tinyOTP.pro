@@ -16,18 +16,24 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    helper.cpp \
     libbaseencode/src/base32.c \
     libbaseencode/src/base64.c \
     libcotp/src/otp.c \
     main.cpp \
-    mainwindow.cpp
+    mainwindow.cpp \
+    otpprofile.cpp \
+    ticonfmain.cpp
 
 HEADERS += \
     config.h \
+    helper.h \
     libbaseencode/src/baseencode.h \
     libbaseencode/src/common.h \
     libcotp/src/cotp.h \
-    mainwindow.h
+    mainwindow.h \
+    otpprofile.h \
+    ticonfmain.h
 
 TRANSLATIONS += \
     tinyOTP_de_DE.ts
