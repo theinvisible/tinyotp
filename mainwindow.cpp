@@ -15,6 +15,7 @@
 #include <iostream>
 #include "helper.h"
 #include "ticonfmain.h"
+#include "settings.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -106,7 +107,8 @@ void MainWindow::onQuit()
 
 void MainWindow::onSettings()
 {
-
+    Settings *s = new Settings(this);
+    s->show();
 }
 
 void MainWindow::genOTP(const QString &name, bool checked)

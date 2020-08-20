@@ -16,6 +16,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    dialogotpprofile.cpp \
     helper.cpp \
     libbaseencode/src/base32.c \
     libbaseencode/src/base64.c \
@@ -23,16 +24,19 @@ SOURCES += \
     main.cpp \
     mainwindow.cpp \
     otpprofile.cpp \
+    settings.cpp \
     ticonfmain.cpp
 
 HEADERS += \
     config.h \
+    dialogotpprofile.h \
     helper.h \
     libbaseencode/src/baseencode.h \
     libbaseencode/src/common.h \
     libcotp/src/cotp.h \
     mainwindow.h \
     otpprofile.h \
+    settings.h \
     ticonfmain.h
 
 TRANSLATIONS += \
@@ -49,3 +53,7 @@ unix:!symbian: LIBS += -lcrypto -lpthread -lssl -lutil -lqt5keychain -lgcrypt
 
 RESOURCES += \
     res.qrc
+
+FORMS += \
+    dialogotpprofile.ui \
+    settings.ui
