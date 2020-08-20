@@ -14,6 +14,13 @@ public:
 
     QSystemTrayIcon *tray;
 
+    enum TASKBAR_POSITION {
+        TASKBAR_POSITION_TOP,
+        TASKBAR_POSITION_BOTTOM
+    };
+
+    static TASKBAR_POSITION taskbarPosition();
+
 protected:
     bool eventFilter(QObject *object, QEvent *event);
 
@@ -23,5 +30,7 @@ private:
 private slots:
     void onQuit();
     void onSettings();
+    void genOTP(const QString &name, bool checked);
+    void updateTray();
 };
 #endif // MAINWINDOW_H

@@ -5,12 +5,15 @@
 #include <QDirIterator>
 #include <QValidator>
 #include <QEventLoop>
+#include <QUuid>
 
 #include "config.h"
 #include "helper.h"
 #include <qt5keychain/keychain.h>
 
 QString tiConfMain::main_config = tiConfMain::formatPath(tinyotp_config::file_main);
+tiConfMain* tiConfMain::_instance = 0;
+tiConfOTPProfiles* tiConfOTPProfiles::_instance = 0;
 
 tiConfMain::tiConfMain()
 {
@@ -119,7 +122,7 @@ QString tiConfMain::getAppDir()
 
 tiConfOTPProfiles::tiConfOTPProfiles()
 {
-    main_settings = new tiConfMain();
+    main_settings = tiConfMain::instance();
     QList<otpProfile*> otpprofiles;
     read_profile_passwords = false;
 }
@@ -152,7 +155,7 @@ void tiConfOTPProfiles::saveOTPProfile(const otpProfile &profile)
     f->setValue("name", profile.name);
     f->setValue("description", profile.description);
     f->setValue("otptype", profile.otptype);
-    f->setValue("uuid_token", "");
+    f->setValue("uuid_token", profile.uuid_token);
     f->endGroup();
 
     f->sync();
@@ -211,6 +214,10 @@ otpProfile *tiConfOTPProfiles::getOTPProfileByName(const QString &otpname)
 bool tiConfOTPProfiles::removeOTPProfileByName(const QString &otpname)
 {
     qDebug() << "deleteotp:::::" << QString("%1/%2.conf").arg(tiConfMain::formatPath(main_settings->getValue("paths/otpprofiles").toString()), otpname);
+
+    otpProfile *p = getOTPProfileByName(otpname);
+    p->removeTOTP();
+
     return QFile::remove(QString("%1/%2.conf").arg(tiConfMain::formatPath(main_settings->getValue("paths/otpprofiles").toString()), otpname));
 }
 

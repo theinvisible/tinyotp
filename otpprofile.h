@@ -8,6 +8,11 @@ class otpProfile
 public:
     otpProfile();
 
+    void setToken(const QString &token);
+    QString getToken();
+    QString getTOTP();
+    void removeTOTP();
+
     enum OTPtype
     {
         OTPtype_TOTP = 0
