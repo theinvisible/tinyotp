@@ -1,4 +1,3 @@
-#include "helper.h"
 #include "otpprofile.h"
 #include "cotp.h"
 
@@ -33,7 +32,7 @@ QString otpProfile::getTOTP()
     return totp_token;
 }
 
-void otpProfile::removeTOTP()
+HelperResult otpProfile::removeTOTP()
 {
-    Helper::systemPasswordStoreDelete(uuid_token);
+    return Helper::systemPasswordStoreDelete(uuid_token);
 }

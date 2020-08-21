@@ -6,12 +6,55 @@
 #include <QProcess>
 #include <QFileInfo>
 #include <QCommandLineParser>
+#include <QTextStream>
 
 #include <iostream>
 #include "config.h"
 #include "otpprofile.h"
 #include "helper.h"
 #include "ticonfmain.h"
+
+QFile *tinyotpLog = 0;
+
+void logMessageOutput(QtMsgType type, const QMessageLogContext &, const QString & str)
+{
+    tiConfMain main_settings;
+    QTextStream sout(stdout);
+
+    if(tinyotpLog == 0)
+    {
+        tinyotpLog = new QFile(QString("%1/tinyotp.log").arg(tiConfMain::formatPath(main_settings.getValue("paths/logs").toString())));
+        tinyotpLog->open(QIODevice::Append | QIODevice::Text);
+    }
+
+    bool tidebug = main_settings.getValue("main/debug").toBool();
+
+    QTextStream out(tinyotpLog);
+    QDateTime currentDate = QDateTime::currentDateTime();
+
+    switch (type) {
+    case QtDebugMsg:
+        if(tidebug == true)
+            out << currentDate.toString("MMM d hh:mm:ss").toStdString().c_str() << " tinyOTP::Debug: " << str << "\n";
+        break;
+    case QtWarningMsg:
+        out << currentDate.toString("MMM d hh:mm:ss").toStdString().c_str() << " tinyOTP::Warning: " << str << "\n";
+        break;
+    case QtCriticalMsg:
+        out << currentDate.toString("MMM d hh:mm:ss").toStdString().c_str() << " tinyOTP::Critical: " << str << "\n";
+        break;
+    case QtInfoMsg:
+        out << currentDate.toString("MMM d hh:mm:ss").toStdString().c_str() << " tinyOTP::Info: " << str << "\n";
+        sout << currentDate.toString("MMM d hh:mm:ss").toStdString().c_str() << " tinyOTP::Info: " << str << "\n";
+        break;
+    case QtFatalMsg:
+        out << currentDate.toString("MMM d hh:mm:ss").toStdString().c_str() << " tinyOTP::Fatal: " << str << "\n";
+        tinyotpLog->flush();
+        abort();
+    }
+
+    tinyotpLog->flush();
+}
 
 bool isRunningAlready()
 {
@@ -37,6 +80,8 @@ bool isRunningAlready()
 
 int main(int argc, char *argv[])
 {
+    qInstallMessageHandler(logMessageOutput);
+
     QTranslator qtTranslator;
     qtTranslator.load("qt_" + QLocale::system().name(), QLibraryInfo::location(QLibraryInfo::TranslationsPath));
 
@@ -89,6 +134,13 @@ int main(int argc, char *argv[])
             }
             else
             {
+                QRegExp rexpName(tinyotp_config::validatorName);
+                if(!rexpName.exactMatch(arg_otpname))
+                {
+                    std::cout << "OTP Profile has not a valid name: " << arg_otpname.toStdString() << std::endl;
+                    return 0;
+                }
+
                 tiConfOTPProfiles *ticonfotpp = tiConfOTPProfiles::instance();
                 otpProfile p;
                 p.name = arg_otpname;

@@ -3,6 +3,8 @@
 
 #include <QObject>
 
+#include "helper.h"
+
 class otpProfile
 {
 public:
@@ -11,7 +13,7 @@ public:
     void setToken(const QString &token);
     QString getToken();
     QString getTOTP();
-    void removeTOTP();
+    HelperResult removeTOTP();
 
     enum OTPtype
     {

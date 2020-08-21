@@ -11,6 +11,7 @@
 #include <QUuid>
 #include <QClipboard>
 #include <QFileSystemWatcher>
+#include <QIcon>
 
 #include <iostream>
 #include "helper.h"
@@ -93,8 +94,8 @@ void MainWindow::updateTray()
     if(MainWindow::taskbarPosition() == MainWindow::TASKBAR_POSITION_BOTTOM)
     {
         tray_menu->addSeparator();
-        tray_menu->addAction(QIcon(":/img/settings.png"), tr("Settings"), this, SLOT(onSettings()));
-        tray_menu->addAction(QIcon(":/img/quit.png"), tr("Quit OpenFortiGUI"), this, SLOT(onQuit()));
+        tray_menu->addAction(QIcon::fromTheme("preferences-system", QIcon(":/img/settings.png")), tr("Settings"), this, SLOT(onSettings()));
+        tray_menu->addAction(QIcon::fromTheme("application-exit", QIcon(":/img/quit.png")), tr("Quit OpenFortiGUI"), this, SLOT(onQuit()));
     }
 
     tray->setContextMenu(tray_menu);

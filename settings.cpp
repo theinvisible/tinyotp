@@ -19,7 +19,7 @@ Settings::Settings(QWidget *parent) :
     ui->tvOTPProfiles->setModel(model);
     ui->tvOTPProfiles->sortByColumn(0, Qt::AscendingOrder);
 
-    ui->tvOTPProfiles->header()->resizeSection(0, 150);
+    ui->tvOTPProfiles->header()->resizeSection(0, 250);
     ui->tvOTPProfiles->header()->resizeSection(1, 250);
 
     loadData();

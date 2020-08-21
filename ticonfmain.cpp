@@ -216,7 +216,11 @@ bool tiConfOTPProfiles::removeOTPProfileByName(const QString &otpname)
     qDebug() << "deleteotp:::::" << QString("%1/%2.conf").arg(tiConfMain::formatPath(main_settings->getValue("paths/otpprofiles").toString()), otpname);
 
     otpProfile *p = getOTPProfileByName(otpname);
-    p->removeTOTP();
+    HelperResult res = p->removeTOTP();
+    if(res.status == false)
+    {
+        qDebug() << "tiConfOTPProfiles::removeOTPProfileByName::" << res.msg;
+    }
 
     return QFile::remove(QString("%1/%2.conf").arg(tiConfMain::formatPath(main_settings->getValue("paths/otpprofiles").toString()), otpname));
 }

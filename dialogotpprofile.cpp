@@ -1,6 +1,7 @@
 #include "dialogotpprofile.h"
 #include "ticonfmain.h"
 #include "ui_dialogotpprofile.h"
+#include "config.h"
 
 #include <QMessageBox>
 
@@ -9,6 +10,11 @@ DialogOtpProfile::DialogOtpProfile(QWidget *parent) :
     ui(new Ui::DialogOtpProfile)
 {
     ui->setupUi(this);
+
+    // Validators
+    QRegExp rx(tinyotp_config::validatorName);
+    QValidator *validatorName = new QRegExpValidator(rx, this);
+    ui->leName->setValidator(validatorName);
 }
 
 DialogOtpProfile::~DialogOtpProfile()
@@ -51,7 +57,11 @@ void DialogOtpProfile::on_buttonBox_accepted()
 
     if(action_type == ActionType_Edit)
     {
+        tiConfOTPProfiles *ticonfotpp = tiConfOTPProfiles::instance();
+        otpProfile *po = ticonfotpp->getOTPProfileByName(profile_name);
+
         p.name = ui->leName->text();
+        p.uuid_token = po->uuid_token;
         if(p.name != profile_name)
             ticonfotpp->renameOTPProfile(profile_name, p.name);
     }
