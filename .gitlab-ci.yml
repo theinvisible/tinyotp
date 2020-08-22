@@ -22,6 +22,7 @@ stages:
 build-ubuntu-2004-64:
   stage: build
   script:
+    - lrelease tinyOTP.pro
     - echo "y" | debuild -eDEB_BUILD_OPTIONS="parallel=4" -us -uc
     - mkdir build
     - mv tinyotp*.deb build/
@@ -43,6 +44,7 @@ build-ubuntu-2004-64-dev:
   <<: *build_template_def
   stage: build
   script:
+    - lrelease tinyOTP.pro
     - echo "y" | debuild -eDEB_BUILD_OPTIONS="parallel=4" -us -uc
     - mkdir build
     - mv tinyotp*.deb build/
@@ -63,6 +65,7 @@ build-ubuntu-2004-64-dev:
 build-ubuntu-1804-64:  
   stage: build
   script:
+    - lrelease tinyOTP.pro
     - echo "y" | debuild -eDEB_BUILD_OPTIONS="parallel=4" -us -uc
     - mkdir build
     - mv tinyotp*.deb build/
@@ -84,6 +87,7 @@ build-ubuntu-1804-64-dev:
   <<: *build_template_def
   stage: build
   script:
+    - lrelease tinyOTP.pro
     - echo "y" | debuild -eDEB_BUILD_OPTIONS="parallel=4" -us -uc
     - mkdir build
     - mv tinyotp*.deb build/
@@ -104,6 +108,7 @@ build-ubuntu-1804-64-dev:
 build-debian-10-64:  
   stage: build
   script:
+    - lrelease tinyOTP.pro
     - echo "y" | debuild -eDEB_BUILD_OPTIONS="parallel=4" -us -uc
     - mkdir build
     - mv tinyotp_*.deb build/
@@ -125,6 +130,7 @@ build-debian-10-64-dev:
   <<: *build_template_def
   stage: build
   script:
+    - lrelease tinyOTP.pro
     - echo "y" | debuild -eDEB_BUILD_OPTIONS="parallel=4" -us -uc
     - mkdir build
     - mv tinyotp_*.deb build/
