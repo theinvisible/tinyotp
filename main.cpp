@@ -7,6 +7,7 @@
 #include <QFileInfo>
 #include <QCommandLineParser>
 #include <QTextStream>
+#include <QMessageBox>
 
 #include <iostream>
 #include "config.h"
@@ -85,11 +86,16 @@ int main(int argc, char *argv[])
     QTranslator qtTranslator;
     qtTranslator.load("qt_" + QLocale::system().name(), QLibraryInfo::location(QLibraryInfo::TranslationsPath));
 
+    QTranslator tinyotpTranslator;
+    tinyotpTranslator.load("tinyotp_" + QLocale::system().name(), ":/translations");
+
     if(argc > 1)
     {
         QApplication a(argc, argv);
         QApplication::setApplicationName(tinyotp_config::name);
         QApplication::setApplicationVersion(tinyotp_config::version);
+        a.installTranslator(&qtTranslator);
+        a.installTranslator(&tinyotpTranslator);
 
         QCommandLineParser parser;
         parser.setApplicationDescription("Help for tinyOTP options");
@@ -182,6 +188,8 @@ int main(int argc, char *argv[])
         QApplication a(argc, argv);
         QApplication::setApplicationName(tinyotp_config::name);
         QApplication::setApplicationVersion(tinyotp_config::version);
+        a.installTranslator(&qtTranslator);
+        a.installTranslator(&tinyotpTranslator);
 
         if(isRunningAlready())
         {
@@ -192,7 +200,7 @@ int main(int argc, char *argv[])
         HelperResult res = Helper::checkSystemPasswordStoreAvailable();
         if(res.status == false)
         {
-            std::cout << "No password store available, aborting" << std::endl;
+            QMessageBox::critical(0, QObject::tr("Startup error"), QObject::tr("No password store available, error: %1, aborting").arg(res.msg));
             exit(0);
         }
 

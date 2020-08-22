@@ -4,5 +4,9 @@
         <file alias="about.png">img/about.png</file>
         <file alias="quit.png">img/quit.png</file>
         <file alias="settings.png">img/settings.png</file>
+        <file alias="key.png">img/key.png</file>
+    </qresource>
+    <qresource prefix="/translations">
+        <file alias="tinyotp_de.qm">lang/tinyotp_de.qm</file>
     </qresource>
 </RCC>

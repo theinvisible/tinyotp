@@ -40,7 +40,7 @@ HEADERS += \
     ticonfmain.h
 
 TRANSLATIONS += \
-    tinyOTP_de_DE.ts
+    lang/tinyotp_de.ts
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

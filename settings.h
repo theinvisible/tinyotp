@@ -2,6 +2,7 @@
 #define SETTINGS_H
 
 #include <QDialog>
+#include <QLineEdit>
 
 namespace Ui {
 class Settings;
@@ -18,10 +19,16 @@ public:
 private slots:
     void on_btnAdd_clicked();
     void loadData();
+    void pathChooser(QLineEdit *widget);
 
     void on_tvOTPProfiles_doubleClicked(const QModelIndex &index);
-
     void on_btnRemove_clicked();
+
+    void on_btnLogs_clicked();
+
+    void on_btnOTPProfiles_clicked();
+
+    void on_btnSaveSettings_clicked();
 
 private:
     Ui::Settings *ui;

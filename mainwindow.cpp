@@ -76,8 +76,8 @@ void MainWindow::updateTray()
 
     if(MainWindow::taskbarPosition() == MainWindow::TASKBAR_POSITION_TOP)
     {
-        tray_menu->addAction(QIcon(":/img/quit.png"), tr("Quit OpenFortiGUI"), this, SLOT(onQuit()));
-        tray_menu->addAction(QIcon(":/img/settings.png"), tr("Settings"), this, SLOT(onSettings()));
+        tray_menu->addAction(QIcon::fromTheme("application-exit", QIcon(":/img/quit.png")), tr("Quit tinyOTP"), this, SLOT(onQuit()));
+        tray_menu->addAction(QIcon::fromTheme("preferences-system", QIcon(":/img/settings.png")), tr("Settings"), this, SLOT(onSettings()));
         tray_menu->addSeparator();
     }
 
@@ -86,7 +86,7 @@ void MainWindow::updateTray()
     {
         otpProfile *otp = otps.at(i);
 
-        QAction *action = new QAction(otp->name, tray_menu);
+        QAction *action = new QAction(QIcon(":/img/key.png"), otp->name, tray_menu);
         connect(action, &QAction::triggered, this, [=](bool checked) { genOTP(otp->name, checked); });
         tray_menu->insertAction(0, action);
     }
@@ -95,7 +95,7 @@ void MainWindow::updateTray()
     {
         tray_menu->addSeparator();
         tray_menu->addAction(QIcon::fromTheme("preferences-system", QIcon(":/img/settings.png")), tr("Settings"), this, SLOT(onSettings()));
-        tray_menu->addAction(QIcon::fromTheme("application-exit", QIcon(":/img/quit.png")), tr("Quit OpenFortiGUI"), this, SLOT(onQuit()));
+        tray_menu->addAction(QIcon::fromTheme("application-exit", QIcon(":/img/quit.png")), tr("Quit tinyOTP"), this, SLOT(onQuit()));
     }
 
     tray->setContextMenu(tray_menu);

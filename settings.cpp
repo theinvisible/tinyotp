@@ -3,6 +3,8 @@
 #include "ticonfmain.h"
 #include "ui_settings.h"
 
+#include <QDir>
+#include <QFileDialog>
 #include <QMessageBox>
 #include <QStandardItemModel>
 
@@ -34,6 +36,12 @@ void Settings::loadData()
 {
     tiConfOTPProfiles *ticonfotpp = tiConfOTPProfiles::instance();
     ticonfotpp->readOTPProfiles();
+
+    tiConfMain *ticonfmain = tiConfMain::instance();
+
+    ui->cbDebug->setChecked(ticonfmain->getValue("main/debug").toBool());
+    ui->leLogs->setText(ticonfmain->getValue("paths/logs").toString());
+    ui->leOTPProfiles->setText(ticonfmain->getValue("paths/otpprofiles").toString());
 
     QStandardItemModel *model = dynamic_cast<QStandardItemModel *>(ui->tvOTPProfiles->model());
     model->removeRows(0, model->rowCount());
@@ -109,4 +117,37 @@ void Settings::on_btnRemove_clicked()
         ticonfotpp->removeOTPProfileByName(otpName);
         loadData();
     }
+}
+
+void Settings::pathChooser(QLineEdit *widget)
+{
+    QString startDir = (widget->text().isEmpty()) ? QDir::homePath() : tiConfMain::formatPath(widget->text());
+
+    QString dir = QFileDialog::getExistingDirectory(this, tr("Choose a directory"),
+                                                    startDir,
+                                                    QFileDialog::ShowDirsOnly
+                                                    | QFileDialog::DontResolveSymlinks);
+
+    if(!dir.isEmpty())
+        widget->setText(dir);
+}
+
+void Settings::on_btnLogs_clicked()
+{
+    pathChooser(ui->leLogs);
+}
+
+void Settings::on_btnOTPProfiles_clicked()
+{
+    pathChooser(ui->leOTPProfiles);
+}
+
+void Settings::on_btnSaveSettings_clicked()
+{
+    tiConfMain *ticonfmain = tiConfMain::instance();
+
+    ticonfmain->setValue("main/debug", ui->cbDebug->isChecked());
+    ticonfmain->setValue("paths/logs", tiConfMain::formatPathReverse(ui->leLogs->text()));
+    ticonfmain->setValue("paths/otpprofiles", tiConfMain::formatPathReverse(ui->leOTPProfiles->text()));
+    ticonfmain->sync();
 }
