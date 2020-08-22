@@ -27,7 +27,7 @@ build-ubuntu-2004-64:
     - echo "y" | debuild -eDEB_BUILD_OPTIONS="parallel=4" -us -uc
     - mkdir build
     - mv ../tinyotp*.deb build/
-    - upload_build build/tinyotp*.deb || true
+    - upload_build_release build/tinyotp*.deb || true
 
   # The files which are to be made available in GitLab
   artifacts:
@@ -72,7 +72,7 @@ build-ubuntu-1804-64:
     - echo "y" | debuild -eDEB_BUILD_OPTIONS="parallel=4" -us -uc
     - mkdir build
     - mv ../tinyotp*.deb build/
-    - upload_build build/tinyotp*.deb || true
+    - upload_build_release build/tinyotp*.deb || true
 
   # The files which are to be made available in GitLab
   artifacts:
@@ -117,7 +117,7 @@ build-debian-10-64:
     - echo "y" | debuild -eDEB_BUILD_OPTIONS="parallel=4" -us -uc
     - mkdir build
     - mv ../tinyotp_*.deb build/
-    - upload_build build/tinyotp*.deb || true
+    - upload_build_release build/tinyotp*.deb || true
 
   # The files which are to be made available in GitLab
   artifacts:
