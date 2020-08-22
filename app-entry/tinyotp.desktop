@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=tinyOTP
+Comment=GUI for OTP/TOTP token handling
+Icon=/usr/share/pixmaps/tinyotp.png
+Exec=/usr/bin/tinyotp
+Terminal=false
+Categories=Network;Application;

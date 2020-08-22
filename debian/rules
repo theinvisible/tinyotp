@@ -1,0 +1,12 @@
+#!/usr/bin/make -f
+
+%:
+	dh $@ --parallel
+
+override_dh_auto_install:
+	mkdir -p debian/tinyotp/usr/bin
+	mkdir -p debian/tinyotp/usr/share/applications
+	mkdir -p debian/tinyotp/usr/share/pixmaps
+	cp -a tinyOTP debian/tinyotp/usr/bin/tinyotp
+	cp -a app-entry/tinyotp.desktop debian/tinyotp/usr/share/applications/.
+	cp -a app-entry/tinyotp.png debian/tinyotp/usr/share/pixmaps/.

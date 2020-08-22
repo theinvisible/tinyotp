@@ -57,3 +57,13 @@ RESOURCES += \
 FORMS += \
     dialogotpprofile.ui \
     settings.ui
+
+DISTFILES += \
+    app-entry/tinyotp.desktop \
+    app-entry/tinyotp.desktop \
+    app-entry/tinyotp.png \
+    debian/changelog \
+    debian/compat \
+    debian/control \
+    debian/copyright \
+    debian/rules

@@ -1,0 +1,13 @@
+Source: tinyotp
+Section: admin
+Priority: optional
+Maintainer: Rene Hadler <rene@hadler.me>
+Build-Depends: debhelper (>= 8.0.0)
+
+Package: tinyotp
+Architecture: amd64 i386
+Depends: ${shlibs:Depends}, qttranslations5-l10n, lsb-release
+Conflicts:
+Replaces:
+Provides: tinyotp
+Description: GUI for OTP/TOTP handling
