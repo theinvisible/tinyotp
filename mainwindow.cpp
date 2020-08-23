@@ -71,7 +71,7 @@ void MainWindow::updateTray()
     ticonfotpp->readOTPProfiles();
 
     if(tray_menu == 0)
-        tray_menu = new QMenu();
+        tray_menu = new QMenu(this);
     tray_menu->clear();
 
     if(MainWindow::taskbarPosition() == MainWindow::TASKBAR_POSITION_TOP)
