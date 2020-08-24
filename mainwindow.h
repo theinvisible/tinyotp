@@ -32,5 +32,6 @@ private slots:
     void onSettings();
     void genOTP(const QString &name, bool checked);
     void updateTray();
+    void onAbout();
 };
 #endif // MAINWINDOW_H

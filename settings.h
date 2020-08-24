@@ -28,7 +28,7 @@ private slots:
 
     void on_btnOTPProfiles_clicked();
 
-    void on_btnSaveSettings_clicked();
+    void on_buttonBox_accepted();
 
 private:
     Ui::Settings *ui;

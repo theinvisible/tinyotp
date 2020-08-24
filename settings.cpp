@@ -142,7 +142,7 @@ void Settings::on_btnOTPProfiles_clicked()
     pathChooser(ui->leOTPProfiles);
 }
 
-void Settings::on_btnSaveSettings_clicked()
+void Settings::on_buttonBox_accepted()
 {
     tiConfMain *ticonfmain = tiConfMain::instance();
 

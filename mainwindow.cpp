@@ -12,11 +12,13 @@
 #include <QClipboard>
 #include <QFileSystemWatcher>
 #include <QIcon>
+#include <QMessageBox>
 
 #include <iostream>
 #include "helper.h"
 #include "ticonfmain.h"
 #include "settings.h"
+#include "config.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -94,6 +96,7 @@ void MainWindow::updateTray()
     if(MainWindow::taskbarPosition() == MainWindow::TASKBAR_POSITION_BOTTOM)
     {
         tray_menu->addSeparator();
+        tray_menu->addAction(QIcon::fromTheme("help-about", QIcon(":/img/about.png")), tr("About"), this, SLOT(onAbout()));
         tray_menu->addAction(QIcon::fromTheme("preferences-system", QIcon(":/img/settings.png")), tr("Settings"), this, SLOT(onSettings()));
         tray_menu->addAction(QIcon::fromTheme("application-exit", QIcon(":/img/quit.png")), tr("Quit tinyOTP"), this, SLOT(onQuit()));
     }
@@ -119,5 +122,17 @@ void MainWindow::genOTP(const QString &name, bool checked)
 
     QClipboard *clipboard = QGuiApplication::clipboard();
     clipboard->setText(p->getTOTP());
+}
+
+void MainWindow::onAbout()
+{
+    QMessageBox::about(this, tr("About tinyOTP"), tr("<b>tinyOTP %1</b><br>"
+                                                             "<table><tr><td width='150'>Developer:</td> <td><b>Rene Hadler</b></td></tr>"
+                                                             "<tr><td>eMail:</td> <td> <a href=mailto:'rene@hadler.me'>rene@hadler.me</a></td></tr>"
+                                                             "<tr><td>Website:</td> <td> <a href=https://hadler.me>https://hadler.me</a></td></tr></table>"
+                                                             "<p>This program uses following libs/resources:</p>"
+                                                             "<table><tr><td width='150'>GCC %2:</td> <td> <a href='https://gcc.gnu.org/'>https://gcc.gnu.org</a></td></tr>"
+                                                             "<tr><td>QT %3:</td> <td> <a href='https://www.qt.io'>https://www.qt.io</a></td></tr>"
+                                                             "<tr><td>Icons8:</td> <td> <a href='https://icons8.com/'>https://icons8.com</a></td></tr></table>").arg(tinyotp_config::version, __VERSION__, QT_VERSION_STR));
 }
 
