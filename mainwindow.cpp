@@ -29,6 +29,7 @@ MainWindow::MainWindow(QWidget *parent)
     tray->setIcon(QIcon(":/img/tinyotp_icon.png"));
     tray->show();
     tray_menu = tray->contextMenu();
+    connect(tray, SIGNAL(activated(QSystemTrayIcon::ActivationReason)), this, SLOT(onTrayIconActivated(QSystemTrayIcon::ActivationReason)));
 
     tiConfMain *ticonfmain = tiConfMain::instance();
     tiConfOTPProfiles *ticonfotpp = tiConfOTPProfiles::instance();
@@ -126,7 +127,7 @@ void MainWindow::genOTP(const QString &name, bool checked)
 
 void MainWindow::onAbout()
 {
-    QMessageBox::about(this, tr("About tinyOTP"), tr("<b>tinyOTP %1</b><br>"
+    QMessageBox::about(0, tr("About tinyOTP"), tr("<b>tinyOTP %1</b><br>"
                                                              "<table><tr><td width='150'>Developer:</td> <td><b>Rene Hadler</b></td></tr>"
                                                              "<tr><td>eMail:</td> <td> <a href=mailto:'rene@hadler.me'>rene@hadler.me</a></td></tr>"
                                                              "<tr><td>Website:</td> <td> <a href=https://hadler.me>https://hadler.me</a></td></tr></table>"
@@ -136,3 +137,10 @@ void MainWindow::onAbout()
                                                              "<tr><td>Icons8:</td> <td> <a href='https://icons8.com/'>https://icons8.com</a></td></tr></table>").arg(tinyotp_config::version, __VERSION__, QT_VERSION_STR));
 }
 
+void MainWindow::onTrayIconActivated(QSystemTrayIcon::ActivationReason reason)
+{
+    if(reason == QSystemTrayIcon::Trigger)
+    {
+        tray->contextMenu()->popup(QCursor::pos());
+    }
+}

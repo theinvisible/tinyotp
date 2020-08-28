@@ -4,7 +4,7 @@
 namespace tinyotp_config
 {
     static const char __attribute__ ((unused)) *name = "tinyOTP";
-    static const char __attribute__ ((unused)) *version = "0.1.1";
+    static const char __attribute__ ((unused)) *version = "0.1.2";
     static const char __attribute__ ((unused)) *file_main = "~/.tinyotp/main.conf";
     static const char __attribute__ ((unused)) *profiles_dir = "~/.tinyotp/profiles";
     static const char __attribute__ ((unused)) *initd_default = "/etc/init.d/tinyotp";

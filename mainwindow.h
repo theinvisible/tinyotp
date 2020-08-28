@@ -33,5 +33,6 @@ private slots:
     void genOTP(const QString &name, bool checked);
     void updateTray();
     void onAbout();
+    void onTrayIconActivated(QSystemTrayIcon::ActivationReason reason);
 };
 #endif // MAINWINDOW_H
