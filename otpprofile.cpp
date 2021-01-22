@@ -9,17 +9,46 @@ otpProfile::otpProfile()
     description = "";
     uuid_token = QUuid::createUuid().toString().replace("{", "").replace("}", "");
     otptype = OTPtype::OTPtype_TOTP;
+    token_enc = "";
+    global_aes_enc = false;
 }
 
 void otpProfile::setToken(const QString &token)
 {
-    Helper::systemPasswordStoreWrite(uuid_token, token);
+    if(global_aes_enc)
+    {
+        QString iv = Helper::randString(16);
+        QString key = Helper::systemPasswordStoreRead("globalaeskey").data;
+        QString enc = Helper::Qaes128_encrypt(token, key, iv);
+        token_enc = iv + ".." + enc;
+    }
+    else
+    {
+        Helper::systemPasswordStoreWrite(uuid_token, token);
+    }
 }
 
 QString otpProfile::getToken()
 {
-    HelperResult res = Helper::systemPasswordStoreRead(uuid_token);
-    return res.data;
+    if(global_aes_enc)
+    {
+        QStringList encarr = token_enc.split("..");
+        if(encarr.length() == 2)
+        {
+            QString iv = encarr[0];
+            QString enc = encarr[1];
+            QString key = Helper::systemPasswordStoreRead("globalaeskey").data;
+            return Helper::Qaes128_decrypt(enc, key, iv);
+        }
+        else
+            return "";
+
+    }
+    else
+    {
+        HelperResult res = Helper::systemPasswordStoreRead(uuid_token);
+        return res.data;
+    }
 }
 
 QString otpProfile::getTOTP()

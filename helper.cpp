@@ -19,6 +19,8 @@
 
 #include <QEventLoop>
 #include <QProcess>
+#include <QThread>
+#include <QTime>
 
 #include "config.h"
 #include <qt5keychain/keychain.h>
@@ -295,3 +297,33 @@ int Helper::runCommandwithReturnCode(const QString &cmd)
     return proc.exitCode();
 }
 
+QString Helper::randString(int len)
+{
+    // Avoid using same seed
+    QThread::msleep(15);
+
+    QString str;
+    int type;
+    str.resize(len);
+    qsrand(QTime::currentTime().msec());
+
+    for(int s = 0; s < len ; ++s)
+    {
+        type = qrand() % 3;
+
+        switch(type)
+        {
+        case 0:
+            str[s] = QChar('a' + char(qrand() % ('z' - 'a')));
+            break;
+        case 1:
+            str[s] = QChar('A' + char(qrand() % ('Z' - 'A')));
+            break;
+        case 2:
+            str[s] = QChar('0' + char(qrand() % ('9' - '0')));
+            break;
+        }
+    }
+
+    return str;
+}

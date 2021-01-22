@@ -43,13 +43,6 @@
           </property>
          </widget>
         </item>
-        <item row="2" column="0">
-         <widget class="QLabel" name="oTPProfilesPathLabel">
-          <property name="text">
-           <string>OTP-Profiles Path</string>
-          </property>
-         </widget>
-        </item>
         <item row="1" column="1">
          <layout class="QHBoxLayout" name="horizontalLayout_3">
           <item>
@@ -64,6 +57,13 @@
           </item>
          </layout>
         </item>
+        <item row="2" column="0">
+         <widget class="QLabel" name="oTPProfilesPathLabel">
+          <property name="text">
+           <string>OTP-Profiles Path</string>
+          </property>
+         </widget>
+        </item>
         <item row="2" column="1">
          <layout class="QHBoxLayout" name="horizontalLayout_4">
           <item>
@@ -73,6 +73,27 @@
            <widget class="QPushButton" name="btnOTPProfiles">
             <property name="text">
              <string>Choose</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item row="3" column="0">
+         <widget class="QLabel" name="label">
+          <property name="text">
+           <string>Global AES Key</string>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="1">
+         <layout class="QHBoxLayout" name="horizontalLayout_2">
+          <item>
+           <widget class="QLineEdit" name="leGlobalAESKey"/>
+          </item>
+          <item>
+           <widget class="QPushButton" name="btnGenAESKey">
+            <property name="text">
+             <string>Generate Key</string>
             </property>
            </widget>
           </item>

@@ -30,6 +30,8 @@ private slots:
 
     void on_buttonBox_accepted();
 
+    void on_btnGenAESKey_clicked();
+
 private:
     Ui::Settings *ui;
 

@@ -24,6 +24,8 @@ public:
     QString description;
     OTPtype otptype;
     QString uuid_token;
+    QString token_enc;
+    bool global_aes_enc;
 };
 
 #endif // OTPPROFILE_H

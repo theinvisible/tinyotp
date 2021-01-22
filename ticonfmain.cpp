@@ -156,6 +156,8 @@ void tiConfOTPProfiles::saveOTPProfile(const otpProfile &profile)
     f->setValue("description", profile.description);
     f->setValue("otptype", profile.otptype);
     f->setValue("uuid_token", profile.uuid_token);
+    f->setValue("global_aes_enc", profile.global_aes_enc);
+    f->setValue("token_enc", profile.token_enc);
     f->endGroup();
 
     f->sync();
@@ -183,6 +185,8 @@ void tiConfOTPProfiles::readOTPProfiles()
             otpprofile->description = f->value("description").toString();
             otpprofile->otptype = static_cast<otpProfile::OTPtype>(f->value("otptype").toInt());
             otpprofile->uuid_token = f->value("uuid_token").toString();
+            otpprofile->global_aes_enc = f->value("global_aes_enc", false).toBool();
+            otpprofile->token_enc = f->value("token_enc").toString();
             f->endGroup();
 
             otpprofiles.append(otpprofile);

@@ -73,6 +73,20 @@
       <item row="3" column="1">
        <widget class="QLineEdit" name="leToken"/>
       </item>
+      <item row="4" column="0">
+       <widget class="QLabel" name="label">
+        <property name="text">
+         <string/>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="1">
+       <widget class="QCheckBox" name="cbUseGlobalEnc">
+        <property name="text">
+         <string>Use global AES encryption (for shared tokens)</string>
+        </property>
+       </widget>
+      </item>
      </layout>
     </widget>
    </item>

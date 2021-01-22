@@ -15,7 +15,7 @@ Settings::Settings(QWidget *parent) :
     ui->setupUi(this);
 
     QStringList headers;
-    headers << tr("Name") << tr("Description") << tr("Uuid");
+    headers << tr("Name") << tr("Description") << tr("Uuid") << tr("Use global AES encryption");
     QStandardItemModel *model = new QStandardItemModel(ui->tvOTPProfiles);
     model->setHorizontalHeaderLabels(headers);
     ui->tvOTPProfiles->setModel(model);
@@ -23,6 +23,7 @@ Settings::Settings(QWidget *parent) :
 
     ui->tvOTPProfiles->header()->resizeSection(0, 250);
     ui->tvOTPProfiles->header()->resizeSection(1, 250);
+    ui->tvOTPProfiles->header()->resizeSection(2, 300);
 
     loadData();
 }
@@ -40,6 +41,7 @@ void Settings::loadData()
     tiConfMain *ticonfmain = tiConfMain::instance();
 
     ui->cbDebug->setChecked(ticonfmain->getValue("main/debug").toBool());
+    ui->leGlobalAESKey->setText(Helper::systemPasswordStoreRead("globalaeskey").data);
     ui->leLogs->setText(ticonfmain->getValue("paths/logs").toString());
     ui->leOTPProfiles->setText(ticonfmain->getValue("paths/otpprofiles").toString());
 
@@ -49,6 +51,7 @@ void Settings::loadData()
     QStandardItem *item = 0;
     QStandardItem *item2 = 0;
     QStandardItem *item3 = 0;
+    QStandardItem *item4 = 0;
 
     QList<otpProfile*> otps = ticonfotpp->getOTPProfiles();
     for(int i=0; i < otps.count(); i++)
@@ -59,10 +62,12 @@ void Settings::loadData()
         item->setData(otp->name);
         item2 = new QStandardItem(otp->description);
         item3 = new QStandardItem(otp->uuid_token);
+        item4 = new QStandardItem((otp->global_aes_enc) ? tr("yes") : tr("no"));
 
         model->setItem(i, 0, item);
         model->setItem(i, 1, item2);
         model->setItem(i, 2, item3);
+        model->setItem(i, 3, item4);
     }
 }
 
@@ -150,4 +155,20 @@ void Settings::on_buttonBox_accepted()
     ticonfmain->setValue("paths/logs", tiConfMain::formatPathReverse(ui->leLogs->text()));
     ticonfmain->setValue("paths/otpprofiles", tiConfMain::formatPathReverse(ui->leOTPProfiles->text()));
     ticonfmain->sync();
+
+    Helper::systemPasswordStoreWrite("globalaeskey", ui->leGlobalAESKey->text());
+}
+
+void Settings::on_btnGenAESKey_clicked()
+{
+    if(!ui->leGlobalAESKey->text().isEmpty())
+    {
+        QMessageBox::StandardButton sel = QMessageBox::question(this, tr("Changing AES Key"), tr("When changing the AES key, global encrypted profiles with the old key cannot be read anymore, continue?"));
+        if(sel == QMessageBox::No)
+        {
+            return;
+        }
+    }
+
+    ui->leGlobalAESKey->setText(Helper::randString(16));
 }

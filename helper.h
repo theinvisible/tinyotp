@@ -34,6 +34,7 @@ public:
     static QString runCommandwithOutput(const QString &cmd);
     static int runCommandwithReturnCode(const QString &cmd);
 
+    static QString randString(int len);
 };
 
 #endif // HELPER_H

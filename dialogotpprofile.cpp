@@ -35,6 +35,7 @@ void DialogOtpProfile::prepareDialog(DialogOtpProfile::ActionType action, const 
         ui->leName->setText(p->name);
         ui->leDescription->setText(p->description);
         ui->leToken->setText(p->getToken());
+        ui->cbUseGlobalEnc->setChecked(p->global_aes_enc);
    }
 }
 
@@ -69,8 +70,9 @@ void DialogOtpProfile::on_buttonBox_accepted()
     p.name = ui->leName->text();
     p.otptype = otpProfile::OTPtype_TOTP;
     p.description = ui->leDescription->text();
-    ticonfotpp->saveOTPProfile(p);
+    p.global_aes_enc = ui->cbUseGlobalEnc->isChecked();
     p.setToken(ui->leToken->text());
+    ticonfotpp->saveOTPProfile(p);
 
     emit form_finished();
 
