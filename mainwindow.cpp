@@ -84,10 +84,22 @@ void MainWindow::updateTray()
         tray_menu->addSeparator();
     }
 
+    // Sort entries via QMap
     QList<otpProfile*> otps = ticonfotpp->getOTPProfiles();
+    QMap<QString, int> sort_otps;
     for(int i=0; i < otps.count(); i++)
     {
         otpProfile *otp = otps.at(i);
+
+        sort_otps[otp->name] = i;
+    }
+
+    QMapIterator<QString, int> i(sort_otps);
+    while (i.hasNext())
+    {
+        i.next();
+
+        otpProfile *otp = otps.at(i.value());
 
         QAction *action = new QAction(QIcon(":/img/key.png"), otp->name, tray_menu);
         connect(action, &QAction::triggered, this, [=](bool checked) { genOTP(otp->name, checked); });

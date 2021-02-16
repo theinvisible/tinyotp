@@ -69,6 +69,9 @@ void Settings::loadData()
         model->setItem(i, 2, item3);
         model->setItem(i, 3, item4);
     }
+
+    ui->tvOTPProfiles->setSortingEnabled(true);
+    ui->tvOTPProfiles->sortByColumn(0, Qt::AscendingOrder);
 }
 
 void Settings::on_btnAdd_clicked()
